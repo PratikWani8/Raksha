@@ -313,7 +313,28 @@ function getPoliceStations(lat, lng) {
         .bindPopup(`
           <b>${name}</b><br>
           Distance: ${distance.toFixed(2)} km<br>
-          <button onclick="showRoute(${policeLat}, ${policeLng})">
+          <a href="tel:112" style="
+              display:block;
+              margin-top:8px;
+              text-align:center;
+              color:red;
+              font-weight:bold;
+              text-decoration:none;
+            ">
+              📞 Call 112
+            </a>
+          <button onclick="showRoute(${policeLat}, ${policeLng})" 
+          style="
+                background:#e91e63;
+                color:white;
+                border:none;
+                padding:6px 12px;
+                border-radius:20px;
+                margin-top:6px;
+                cursor:pointer;
+                width:100%;
+              "
+          >
             Navigate Here
           </button>
         `);
@@ -360,7 +381,6 @@ function showRoute(destLat, destLng) {
 
   }
 
-
   routeControl = L.Routing.control({
 
     waypoints: [
@@ -374,6 +394,28 @@ function showRoute(destLat, destLng) {
     show: true
 
   }).addTo(map);
+
+
+  // Voice Navigation
+  routeControl.on('routesfound', function(e) {
+
+    const routes = e.routes;
+    const summary = routes[0].summary;
+
+    const distance = (summary.totalDistance / 1000).toFixed(2);
+    const time = Math.round(summary.totalTime / 60);
+
+    const speech = new SpeechSynthesisUtterance(
+      "Route found. Distance is " + distance + " kilometers. Estimated time " + time + " minutes. Start moving towards the highlighted route."
+    );
+
+    speech.lang = "en-IN";
+    speech.rate = 1;
+    speech.pitch = 1;
+
+    window.speechSynthesis.speak(speech);
+
+  });
 
 }
 
