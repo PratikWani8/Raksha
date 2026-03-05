@@ -338,7 +338,14 @@ function getPoliceStations(lat, lng) {
             Navigate Here
           </button>
         `);
-
+          
+        if (btn) {
+            btn.onclick = () => {
+              showRoute(userLat, userLng, policeLat, policeLng);
+              speak("Navigation started to " + name);
+            };
+          }
+          
       });
 
 
