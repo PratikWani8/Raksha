@@ -3,36 +3,39 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: #e91e63;
-    color: white;
-    border: none;
-    border-radius: 50%;
     width: 65px;
     height: 65px;
-    font-size: 28px;
+    border-radius: 50%;
+    background: #e91e63;
+    color: white;
+    font-size: 26px;
+    border: none;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
-    z-index: 999;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
     transition: transform 0.3s;
 }
-.chat-toggle-btn:hover { transform: scale(1.1); }
 
-/* ================= CHATBOT ================= */
+.chat-toggle-btn:hover {
+    transform: scale(1.1);
+}
+
+/* ================= CHATBOT BOX ================= */
+
 .chatbot-wrapper {
     display: none;
+    flex-direction: column;
     position: fixed;
     bottom: 95px;
-    right: 20px; 
-    width: 320px;
-    height: 450px;
+    right: 20px;
+    width: 340px;
+    height: 460px;
     background: white;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     overflow: hidden;
     z-index: 9999;
     animation: slideUp 0.3s ease-out;
-    font-family: sans-serif;
 }
 
 .chat-header {
@@ -78,18 +81,18 @@
 /* ================= INPUT ================= */
 .chat-input-area {
     display: flex;
-    align-items: center; 
+    align-items: center;
     padding: 12px;
     background: white;
     border-top: 1px solid #eee;
-    gap: 8px; 
+    gap: 8px;
 }
 
 .chat-input-area input {
     flex: 1;
     padding: 10px 15px;
     border: 1px solid #ddd;
-    border-radius: 25px; 
+    border-radius: 25px;
     outline: none;
     font-size: 14px;
     transition: border 0.3s;
@@ -104,7 +107,7 @@
     background: #e91e63;
     color: white;
     border: none;
-    border-radius: 50%; 
+    border-radius: 50%;
     width: 40px;
     height: 40px;
     display: flex;
@@ -121,7 +124,7 @@
 }
 
 .send-btn svg {
-    margin-left: 3px; 
+    margin-left: 3px;
 }
 
 .mic-btn {
@@ -151,19 +154,41 @@
 
 /* ================= ANIMATIONS ================= */
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px) scale(0.9); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 @keyframes messageFade {
-    from { opacity: 0; transform: translateX(10px); }
-    to { opacity: 1; transform: translateX(0); }
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 /* ================= HEADER ================= */
@@ -194,49 +219,45 @@ header {
 }
 
 /* ================= BODY ================= */
-body{
-    margin:0;
-    font-family:'Poppins',sans-serif;
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
     background: linear-gradient(120deg, #fff5f8, #ffe4ec, #f8d9ff);
     backdrop-filter: blur(10px);
-    color:#333;
-    min-height:100vh;
+    color: #333;
+    min-height: 100vh;
 }
 
-.title{
-    text-align:center;
-    margin:20px 0;
-    font-size:24px;
+.title {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 24px;
 }
 
 /* ================= CARDS ================= */
-.glass-container{
-    display:grid;
-    grid-template-columns: repeat(2,1fr);
-    gap:20px;
-    padding:20px;
+.glass-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
 }
 
-.glass-card{
-    height:120px;
-    border-radius:20px;
-    text-decoration:none;
-    color:#fff;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    gap:10px;
-
+.glass-card {
+    height: 105px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     background: rgba(254, 131, 180, 0.4);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-
     border: 1px solid rgba(253, 59, 166, 1);
     box-shadow: 0 8px 25px rgba(255, 182, 193, 0.25);
-
-    transition:0.3s;
+    transition: 0.3s;
 }
 
 .glass-card i {
@@ -258,34 +279,40 @@ svg.lucide {
     color: #555;
 }
 
-.glass-card .label{
+.glass-card .label {
     font-size: 14px;
     font-weight: 600;
     color: black;
 }
 
-.glass-card:hover{
+.glass-card:hover {
     transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
-.glass-card.danger{
+.glass-card.danger {
     background: rgba(255, 0, 0, 0.58);
-    border:1px solid rgba(255, 0, 0, 0.67);
-    box-shadow: 0 0 20px rgba(255,0,0,0.6);
+    border: 1px solid rgba(255, 0, 0, 0.67);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
 }
 
-.glass-card.logout{
+.glass-card.logout {
     grid-column: span 2;
 }
 
 /* ================= MOBILE ================= */
 @media (max-width: 480px) {
     .chatbot-wrapper {
-        width: 95%;
-        height: 80%;
-        right: 2.5%;
-        bottom: 80px;
+        width: 90%;
+        right: 5%;
+        height: 70%;
+        bottom: 100px;
+    }
+
+    .chat-toggle-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
     }
 
     .chat-input-area {
@@ -297,16 +324,17 @@ svg.lucide {
         padding: 8px 12px;
     }
 
-    .send-btn, .mic-btn {
+    .send-btn,
+    .mic-btn {
         width: 36px;
         height: 36px;
     }
 
-    .glass-container{
-        gap:15px;
+    .glass-container {
+        gap: 15px;
     }
 
-    .glass-card{
-        height:100px;
+    .glass-card {
+        height: 100px;
     }
 }
