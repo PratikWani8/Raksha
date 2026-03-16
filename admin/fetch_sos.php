@@ -19,9 +19,7 @@ SELECT
 FROM emergency_sos s
 JOIN users u ON s.user_id = u.user_id
 
-
 UNION ALL
-
 
 SELECT 
     n.sos_id,
