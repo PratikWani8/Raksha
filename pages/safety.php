@@ -24,7 +24,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="../index.css" />
+  <link rel="stylesheet" href="../bot/chatbot.css" />
   <link rel="icon" href="../assets/favicon.jpg" type="image/x-icon" />
+ 
 </head>
 <body>
 
@@ -144,12 +146,53 @@
 
   </section>
 
+  <!-- Chatbot -->
+   <div id="chat-container" class="chatbot-wrapper">
+
+<div class="chat-header">
+<span>🤖 Raksha AI</span>
+</div>
+
+<div id="chat-box" class="chat-content" style="display:flex; flex-direction:column;">
+<div class="msg bot-msg">
+Hello! I am Raksha AI, your Women Safety Assistant. How can I help you?
+</div>
+</div>
+
+<div class="chat-input-area">
+
+<input type="text" id="user-input"
+placeholder="Ask about safety..."
+onkeypress="if(event.key==='Enter') sendMessage()">
+
+<button class="mic-btn" onclick="startVoiceInput()">
+    <svg viewBox="0 0 24 24" width="22" height="22">
+        <path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 14 0h-2zm-5 8a7 7 0 0 0 7-7h-2a5 5 0 0 1-10 0H5a7 7 0 0 0 7 7z"/>
+    </svg>
+</button>
+
+ <button class="send-btn" onclick="sendMessage()">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+        </svg>
+    </button>
+
+</div>
+
+</div>
+
+<button class="chat-toggle-btn" onclick="toggleChat()">🤖</button>
+
   <!-- Footer -->
    <footer style="text-align:center; padding:15px; color:#666; background:white; margin-top:30px;">
   © <?php echo date("Y"); ?> Raksha - Women Safety System | Designed for Safety • Security • Empowerment for Women | All Rights Reserved.
 </footer>
 
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="../bot/chatbot.js"></script>
 <script>
+   lucide.createIcons();
+
   const links = document.querySelectorAll("nav a");
   const currentPage = window.location.pathname.split("/").pop();
 
@@ -158,6 +201,7 @@
       link.classList.add("active");
     }
   });
+
 </script>
 
 </body>
