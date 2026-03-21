@@ -23,6 +23,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="bot/chatbot.css" />
   <link rel="icon" href="assets/favicon.jpg" type="image/x-icon" />
 </head>
 
@@ -358,6 +359,43 @@
 
 </section>
 
+  <!-- Chatbot -->
+   <div id="chat-container" class="chatbot-wrapper">
+
+<div class="chat-header">
+<span>🤖 Raksha AI</span>
+</div>
+
+<div id="chat-box" class="chat-content" style="display:flex; flex-direction:column;">
+<div class="msg bot-msg">
+Hello! I am Raksha AI, your Women Safety Assistant. How can I help you?
+</div>
+</div>
+
+<div class="chat-input-area">
+
+<input type="text" id="user-input"
+placeholder="Ask about safety..."
+onkeypress="if(event.key==='Enter') sendMessage()">
+
+<button class="mic-btn" onclick="startVoiceInput()">
+    <svg viewBox="0 0 24 24" width="22" height="22">
+        <path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 14 0h-2zm-5 8a7 7 0 0 0 7-7h-2a5 5 0 0 1-10 0H5a7 7 0 0 0 7 7z"/>
+    </svg>
+</button>
+
+ <button class="send-btn" onclick="sendMessage()">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+        </svg>
+    </button>
+
+</div>
+
+</div>
+
+<button class="chat-toggle-btn" onclick="toggleChat()">🤖</button>
+
 <!-- Footer -->
 <footer style="text-align:center; padding:15px; color:#666;">
   © <?php echo date("Y"); ?> Raksha - Women Safety System | Designed for Safety • Security • Empowerment for Women | All Rights Reserved.
@@ -426,6 +464,76 @@ const nav = document.getElementById("nav-menu");
 toggle.addEventListener("click", () => {
   nav.classList.toggle("active");
 });
+
+//bot
+function toggleChat(){
+const chat = document.getElementById("chat-container")
+if(chat.style.display === "flex"){
+chat.style.display="none"
+}else{
+chat.style.display="flex"
+}
+}
+
+async function sendMessage(){
+const input=document.getElementById("user-input")
+const chatBox=document.getElementById("chat-box")
+const message=input.value.trim()
+if(message==="") return
+const userMsg=document.createElement("div")
+userMsg.className="msg user-msg"
+userMsg.innerText=message
+chatBox.appendChild(userMsg)
+input.value=""
+chatBox.scrollTop=chatBox.scrollHeight
+const typing=document.createElement("div")
+typing.className="msg bot-msg typing"
+typing.innerHTML="Raksha AI is thinking<span class='dots'>...</span>"
+chatBox.appendChild(typing)
+chatBox.scrollTop=chatBox.scrollHeight
+
+const response=await fetch("../ai/ollama_chat.php",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+message:message
+})
+})
+const data=await response.json()
+
+typing.remove()
+
+const botMsg=document.createElement("div")
+botMsg.className="msg bot-msg"
+typeWriter(botMsg,data.reply,20)
+chatBox.appendChild(botMsg)
+chatBox.scrollTop=chatBox.scrollHeight
+}
+
+function typeWriter(element,text,speed){
+let i=0
+function typing(){
+if(i<text.length){
+element.innerHTML += text.charAt(i)
+i++
+setTimeout(typing,speed)
+}
+}
+typing()
+}
+
+function startVoiceInput(){
+const recognition=new(window.SpeechRecognition || window.webkitSpeechRecognition)()
+recognition.lang="en-US"
+recognition.start()
+recognition.onresult=function(event){
+const transcript=event.results[0][0].transcript
+document.getElementById("user-input").value=transcript
+sendMessage()
+}
+}
 
 </script>
 
