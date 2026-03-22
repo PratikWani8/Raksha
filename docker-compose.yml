@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+
   raksha_app:
     build: .
     container_name: raksha_app
@@ -10,6 +11,8 @@ services:
       - .:/var/www/html
     depends_on:
       - raksha_db
+      - ollama
+    restart: always
 
   raksha_db:
     image: mysql:5.7
@@ -34,7 +37,18 @@ services:
     environment:
       PMA_HOST: raksha_db
       MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - raksha_db
 
+  ollama:
+    image: ollama/ollama
+    container_name: raksha_ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: always
 
 volumes:
   db_data:
+  ollama_data:
