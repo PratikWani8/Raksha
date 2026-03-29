@@ -24,6 +24,7 @@ Raksha helps users, especially women, to stay safe by enabling real-time emergen
 - MySQL Database
 
 ### ML Model
+- Ollama (Local LLM)
 - Tensorflow js
 
 ### Container
@@ -44,99 +45,27 @@ Raksha helps users, especially women, to stay safe by enabling real-time emergen
 
 ---
 
-## ⚙️ Installation Steps (Docker Setup)
+## ⚙️ Installation & Setup 
 
-1. Clone the repository
+1. Clone the Repository
+   ```bash
+   git clone https://github.com/PratikWani8/Raksha.git
+   ```
 
+2. Run the system
+   ```bash
+   docker compose up -d
+   ```
 
-git clone https://github.com/your-username/raksha.git
-cd raksha
+3. Install LLM Model
+   ```bash
+   docker exec -it raksha_ollama ollama pull phi3
+   ```
 
-
-2. Install Docker Desktop
-
-Download and install Docker from:
-https://www.docker.com/products/docker-desktop/
-
-Make sure Docker is running before proceeding.
-
----
-
-3. Configure Database Connection
-
-Open config/db.php and update:
-
-
-$host = "raksha_db";
-$user = "raksha_user";
-$password = "raksha_pass";
-$database = "raksha_ai";
-
-
----
-
-4. Import Database (First Time Only)
-
-Open phpMyAdmin:
-
-
-http://localhost:8081
-
-
-Login:
-- Username: root
-- Password: root
-
-Steps:
-- Create database raksha_ai
-- Import raksha.sql
-
----
-
-5. Start Docker Containers
-
-
-docker-compose up --build
-
-
-This will start:
-- PHP + Apache server
-- MySQL database
-- phpMyAdmin
-
----
-
-## ▶️ How to Run
-
-1. Start the containers
-
-
-docker-compose up
-
-
-2. Open the application
-
-
-http://localhost:8080
-
-
-3. Use the system
-
-- Register/Login as user
-- Send SOS alert
-- View Admin Panel
-
-4. Open Admin Panel
-
-
-http://localhost:8080/admin
-
-
-5. Open Database (phpMyAdmin)
-
-
-http://localhost:8081
-
+4. Open Raksha
+   ```bash
+   http://localhost:8080
+   ```
 
 ---
 
