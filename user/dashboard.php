@@ -48,19 +48,9 @@ $username = $user['name'];
 
 <div class="glass-container">
 
-<a href="report_complaint.php" class="glass-card">
-    <i data-lucide="message-circle"></i>
-    <div class="label">Complaint</div>
-</a>
-
 <a href="send_sos.php" class="glass-card danger">
     <i data-lucide="alert-triangle"></i>
     <div class="label">SOS</div>
-</a>
-
-<a href="view_status.php" class="glass-card">
-    <i data-lucide="file-text"></i>
-    <div class="label">Status</div>
 </a>
 
 <a href="../ai/ai_heatmap.php" class="glass-card">
@@ -76,6 +66,16 @@ $username = $user['name'];
 <a href="../ai/ai_fir_gen.php" class="glass-card">
     <i data-lucide="file-plus"></i>
     <div class="label">FIR</div>
+</a>
+
+<a href="report_complaint.php" class="glass-card">
+    <i data-lucide="message-circle"></i>
+    <div class="label">Complaint</div>
+</a>
+
+<a href="view_status.php" class="glass-card">
+    <i data-lucide="file-text"></i>
+    <div class="label">Status</div>
 </a>
 
 <a href="../auth/logout.php" class="glass-card logout">
