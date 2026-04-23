@@ -7,7 +7,6 @@ right:20px;
 width:65px;
 height:65px;
 border-radius:50%;
-background:#e91e63;
 color:white;
 font-size:26px;
 border:none;
@@ -15,6 +14,65 @@ cursor:pointer;
 box-shadow:0 5px 20px rgba(0,0,0,0.3);
 z-index:9999;
 transition: transform 0.3s;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:0;
+overflow:hidden;
+}
+
+.chat-btn-inner{
+position:relative;
+width:55px;
+height:55px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+/* Ping animation */
+.ping{
+position:absolute;
+width:100%;
+height:100%;
+border-radius:50%;
+background: rgb(60, 60, 233);
+opacity:0.3;
+animation: ping 1.5s infinite;
+}
+
+@keyframes ping{
+0%{
+transform:scale(1);
+opacity:0.5;
+}
+75%,100%{
+transform:scale(1.8);
+opacity:0;
+}
+}
+
+/* Bot image */
+.bot-img{
+position:relative;
+width:100%;
+height:100%;
+border-radius:50%;
+object-fit:cover;
+z-index:10;
+}
+
+/* Online dot */
+.status-dot{
+position:absolute;
+bottom:3px;
+right:3px;
+width:12px;
+height:12px;
+background:#00e676;
+border:2px solid white;
+border-radius:50%;
+z-index:20;
 }
 
 .chat-toggle-btn:hover { transform: scale(1.1); }
