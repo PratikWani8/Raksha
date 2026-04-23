@@ -394,7 +394,17 @@ onkeypress="if(event.key==='Enter') sendMessage()">
 
 </div>
 
-<button class="chat-toggle-btn" onclick="toggleChat()">🤖</button>
+<button class="chat-toggle-btn" onclick="toggleChat()">
+    <div class="chat-btn-inner">
+        
+        <span class="ping"></span>
+
+        <img src="../assets/raksha_ai_pfp.jpg" alt="chatbot" class="bot-img">
+
+        <span class="status-dot"></span>
+
+    </div>
+</button>
 
 <!-- Footer -->
 <footer style="text-align:center; padding:15px; color:#666;">
@@ -475,24 +485,74 @@ chat.style.display="flex"
 }
 }
 
+function speak(text, langCode = "en"){
+const utterance = new SpeechSynthesisUtterance(text)
+
+const langMap = {
+en:"en-IN",
+hi:"hi-IN",
+bn:"bn-IN",
+gu:"gu-IN",
+pa:"pa-IN",
+or:"or-IN",
+te:"te-IN",
+kn:"kn-IN",
+ml:"ml-IN",
+ta:"ta-IN",
+ur:"ur-IN"
+}
+
+utterance.lang = langMap[langCode] || "en-IN"
+
+const voices = speechSynthesis.getVoices()
+let voice =
+voices.find(v=>v.lang===utterance.lang) ||
+voices.find(v=>v.lang.startsWith(langCode)) ||
+voices[0]
+
+if(voice) utterance.voice = voice
+
+speechSynthesis.cancel()
+speechSynthesis.speak(utterance)
+}
+
+function detectLanguage(text){
+if(/[\u0980-\u09FF]/.test(text)) return "bn"
+if(/[\u0A80-\u0AFF]/.test(text)) return "gu"
+if(/[\u0A00-\u0A7F]/.test(text)) return "pa"
+if(/[\u0B00-\u0B7F]/.test(text)) return "or"
+if(/[\u0C00-\u0C7F]/.test(text)) return "te"
+if(/[\u0C80-\u0CFF]/.test(text)) return "kn"
+if(/[\u0D00-\u0D7F]/.test(text)) return "ml"
+if(/[\u0B80-\u0BFF]/.test(text)) return "ta"
+if(/[\u0900-\u097F]/.test(text)) return "hi"
+if(/[\u0600-\u06FF]/.test(text)) return "ur"
+return "en"
+}
+
+
 async function sendMessage(){
 const input=document.getElementById("user-input")
 const chatBox=document.getElementById("chat-box")
 const message=input.value.trim()
 if(message==="") return
+
 const userMsg=document.createElement("div")
 userMsg.className="msg user-msg"
 userMsg.innerText=message
 chatBox.appendChild(userMsg)
+
 input.value=""
 chatBox.scrollTop=chatBox.scrollHeight
+
 const typing=document.createElement("div")
 typing.className="msg bot-msg typing"
 typing.innerHTML="Raksha AI is thinking<span class='dots'>...</span>"
 chatBox.appendChild(typing)
+
 chatBox.scrollTop=chatBox.scrollHeight
 
-const response=await fetch("../ai/ollama_chat.php",{
+const response=await fetch("../ai/groq_chatbot.php",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
@@ -501,16 +561,26 @@ body:JSON.stringify({
 message:message
 })
 })
+
 const data=await response.json()
 
 typing.remove()
 
 const botMsg=document.createElement("div")
 botMsg.className="msg bot-msg"
-typeWriter(botMsg,data.reply,20)
+
+const reply = data.reply || "Error"
+const lang = data.lang || "en"  
+
+typeWriter(botMsg,reply,20)
+
+speak(reply, lang)
+
 chatBox.appendChild(botMsg)
 chatBox.scrollTop=chatBox.scrollHeight
+
 }
+
 
 function typeWriter(element,text,speed){
 let i=0
@@ -526,11 +596,19 @@ typing()
 
 function startVoiceInput(){
 const recognition=new(window.SpeechRecognition || window.webkitSpeechRecognition)()
-recognition.lang="en-US"
+
+recognition.lang="en-IN" 
 recognition.start()
+
 recognition.onresult=function(event){
 const transcript=event.results[0][0].transcript
+
 document.getElementById("user-input").value=transcript
+
+const lang = detectLanguage(transcript)
+
+recognition.lang = lang + "-IN"
+
 sendMessage()
 }
 }
