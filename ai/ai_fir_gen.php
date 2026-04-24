@@ -6,7 +6,9 @@
 <title>AI FIR Generator</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 <link rel="icon" href="../assets/favicon.jpg" type="image/x-icon" />
 
 <style>
@@ -79,6 +81,121 @@ button{
 .mic-btn.recording{
   background:red;
 }
+
+.row {
+    display: flex;
+    gap: 12px;
+}
+
+.upload-box {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px dashed #ec4899;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.upload-box:hover {
+    background: #fdf2f8;
+}
+
+.toggle-box {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f3f4f6;
+    padding: 0 12px;
+    border-radius: 8px;
+}
+
+.toggle {
+    width: 40px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 2px;
+    cursor: pointer;
+    transition: 0.3s;
+    background: #9ca3af;
+}
+
+.toggle.active {
+    background: #22c55e;
+}
+
+.toggle-circle {
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.toggle.active .toggle-circle {
+    transform: translateX(20px);
+}
+
+.small-text {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.success-text {
+    font-size: 12px;
+    color: #16a34a;
+    margin-top: 4px;
+}
+
+.preview {
+    margin-top: 8px;
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.crime-box {
+    background: #dbeafe;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 12px;
+}
+
+.label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+canvas {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: white;
+}
+
+.clear-btn {
+    margin-top: 8px;
+    background: #ef4444;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 50%;
+}
+
+.clear-btn:hover {
+    background: #dc2626;
+}
+
 </style>
 </head>
 
@@ -102,6 +219,73 @@ button{
 <path d="M12 19v3"/>
 </svg>
 </div>
+</div>
+
+<div class="upload-container">
+
+<label class="label">Upload Evidence</label>
+
+<div class="row">
+
+<!-- Upload -->
+<label class="upload-box">
+<span>⬆️</span>
+<span class="small-text">Upload</span>
+
+<input
+type="file"
+accept="image/*,audio/*"
+id="fileInput"
+hidden
+>
+</label>
+
+<!-- OCR Toggle -->
+<div class="toggle-box">
+
+<span class="small-text" style="font-weight:500;">OCR</span>
+
+<div id="toggle" class="toggle">
+<div class="toggle-circle"></div>
+</div>
+
+</div>
+
+</div>
+
+<p class="small-text">
+Image / Audio only (max 2MB)
+</p>
+
+<p id="fileName" class="success-text"></p>
+
+<img id="preview" class="preview" style="display:none;">
+
+</div>
+
+<!-- Crime Detection -->
+<div id="crimeBox" class="crime-box" style="display:none;">
+<p style="font-size:14px;font-weight:600;">
+Detected Crime: <span id="crimeType"></span>
+</p>
+<p class="small-text">
+IPC: <span id="ipc"></span>
+</p>
+</div>
+
+<!-- didital sign -->
+<div class="digital-sign-container">
+
+<p class="label">Digital Signature</p>
+
+<canvas id="signature-pad" width="400" height="150"></canvas>
+
+<br>
+
+<button id="clear-btn" class="clear-btn">
+Clear Signature
+</button>
+
 </div>
 
 <select id="lang">
@@ -172,6 +356,50 @@ function startVoice(){
 
   recognition.onend = ()=> mic.classList.remove('recording');
 }
+
+// file input and ocr
+let ocrEnabled = false;
+
+async function runOCRAndDetect(file){
+
+    document.getElementById("description").innerText = "Processing OCR...";
+
+    const { data: { text } } = await Tesseract.recognize(file,'eng');
+
+    document.getElementById("description").innerText = text;
+
+    const crimeType = predictType(text);
+    const ipc = getIPCSections(crimeType, text);
+
+    document.getElementById("crimeType").innerText = crimeType;
+    document.getElementById("ipc").innerText = ipc;
+    document.getElementById("crimeBox").style.display = "block";
+}
+
+// -------- FILE INPUT --------
+document.getElementById("fileInput").addEventListener("change", async function(e){
+
+    const file = e.target.files[0];
+    if(!file) return;
+
+    document.getElementById("fileName").innerText = "Uploaded: " + file.name;
+
+    if(file.type.startsWith("image")){
+        const preview = document.getElementById("preview");
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "block";
+    }
+
+    if(ocrEnabled && file.type.startsWith("image")){
+        await runOCRAndDetect(file);
+    }
+});
+
+// -------- TOGGLE --------
+document.getElementById("toggle").addEventListener("click", function(){
+    ocrEnabled = !ocrEnabled;
+    this.classList.toggle("active");
+});
 
 // -------- NLP MODEL --------
 let model;
@@ -778,14 +1006,74 @@ ${description}
 }
 
 // -------- PDF --------
+const { jsPDF } = window.jspdf;
+
+const canvas = document.getElementById("signature-pad");
+const signaturePad = new SignaturePad(canvas);
+
+const policeLogo = "../assets/policeLogo.png";
+
+// clear signature
+function clearSignature() {
+    signaturePad.clear();
+}
+
+// your function (connected with full logic)
 async function downloadPDF(){
-    const { jsPDF } = window.jspdf;
+
     const doc = new jsPDF();
 
-    let text = document.getElementById("output").value;
-    let lines = doc.splitTextToSize(text, 180);
+    // border
+    doc.rect(5,5,200,287);
 
-    doc.text(lines,10,10);
+    // watermark
+    doc.setTextColor(220);
+    doc.setFontSize(60);
+    doc.text("SAMPLE FIR COPY",115,160,{align:"center",angle:45});
+    doc.setTextColor(0);
+    
+    if(policeLogo){
+        doc.addImage(policeLogo,"PNG",90,10,30,30);
+    }
+
+    // title
+    doc.setFontSize(18);
+    doc.text("MAHARASHTRA POLICE",105,50,{align:"center"});
+
+    doc.setFontSize(14);
+    doc.text("FIRST INFORMATION REPORT (FIR)",105,58,{align:"center"});
+
+    doc.line(20,62,190,62);
+
+    // FIR text (your original logic)
+    let text = document.getElementById("output").value;
+    let lines = doc.splitTextToSize(text,170);
+    doc.setFontSize(11);
+    doc.text(lines,20,75);
+
+    // check signature
+    if(signaturePad.isEmpty()){
+        alert("Please add signature before downloading FIR");
+        return;
+    }
+
+    const pageHeight = doc.internal.pageSize.height;
+    const finalY = 75 + (lines.length * 6);
+
+    let signatureY = finalY + 10;
+
+    if(signatureY > pageHeight - 60){
+        signatureY = pageHeight - 60;
+    }
+
+    // signature
+    const signatureImage = signaturePad.toDataURL("image/png");
+
+    doc.addImage(signatureImage,"PNG",150,signatureY,40,20);
+
+    doc.line(150,signatureY + 22,195,signatureY + 22);
+    doc.text("Digital Signature",150,signatureY + 30);
+
     doc.save("FIR.pdf");
 }
 
