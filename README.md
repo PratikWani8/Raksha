@@ -23,8 +23,8 @@ Raksha helps users, especially women, to stay safe by enabling real-time emergen
 ### Database
 - MySQL Database
 
-### ML Model
-- Ollama (Local LLM)
+### AI & ML Model
+- Llama 3.1-8b
 - Tensorflow js
 
 ### Container
@@ -40,8 +40,12 @@ Raksha helps users, especially women, to stay safe by enabling real-time emergen
 - Cloudflare
 
 ### APIs
+- Groq API
 - Geolocation API
 - Web Speech API
+
+### OCR
+- Tesseract.js
 
 ---
 
@@ -57,12 +61,7 @@ Raksha helps users, especially women, to stay safe by enabling real-time emergen
    docker compose up -d
    ```
 
-3. Install LLM Model
-   ```bash
-   docker exec -it raksha_ollama ollama pull phi3
-   ```
-
-4. Open Raksha
+3. Open Raksha
    ```bash
    http://localhost:8080
    ```
