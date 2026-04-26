@@ -1,7 +1,8 @@
 <?php
 header("Content-Type: application/json");
 
-$apiKey = "YOUR_GROQ_API_KEY";
+// api
+$apiKey = "";
 
 $input = json_decode(file_get_contents("php://input"), true);
 $userInput = $input["message"] ?? "";
