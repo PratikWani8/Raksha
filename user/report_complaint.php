@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 
     $stmt->execute();
 
-    $sheetURL = "https://script.google.com/macros/s/AKfycbxQPNz0qWhOBUMl9131kklTQUAB3p9JH6-uH4oQCcaSundLVjzhBKHJdmxMGE6ogZC2/exec";
+    $sheetURL = "";
 
     $sheetData = [
         "user_id"  => $_SESSION['user_id'],
@@ -77,7 +77,6 @@ if (isset($_POST['submit'])) {
     echo "<script>alert('✅ Complaint submitted successfully');</script>";
 }
 ?>
-
 
 <!DOCTYPE html>
 <html>
