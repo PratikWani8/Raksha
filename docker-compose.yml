@@ -11,7 +11,6 @@ services:
       - .:/var/www/html
     depends_on:
       - raksha_db
-      - ollama
     restart: always
 
   raksha_db:
@@ -40,15 +39,5 @@ services:
     depends_on:
       - raksha_db
 
-  ollama:
-    image: ollama/ollama
-    container_name: raksha_ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    restart: always
-
 volumes:
   db_data:
-  ollama_data:
