@@ -18,6 +18,7 @@ $username = $user['name'];
 <head>
     <title>User Dashboard - Raksha</title>
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="../bot/chatbot.css">
        <!-- META TAGS -->
     <meta charset = "UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,7 +85,6 @@ $username = $user['name'];
 </a>
 </div>
 
-
 <div id="chat-container" class="chatbot-wrapper">
     <div class="chat-header">
         <span>🤖 Raksha AI</span>
@@ -108,7 +108,17 @@ $username = $user['name'];
 </div>
 </div>
 
-<button class="chat-toggle-btn" onclick="toggleChat()">🤖</button>
+<button class="chat-toggle-btn" onclick="toggleChat()">
+    <div class="chat-btn-inner">
+        
+        <span class="ping"></span>
+
+        <img src="../assets/raksha_ai_pfp.jpg" alt="chatbot" class="bot-img">
+
+        <span class="status-dot"></span>
+
+    </div>
+</button>
 
 <script src="../ai/chatbot.js"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
