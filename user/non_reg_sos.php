@@ -30,10 +30,10 @@ if (isset($_POST['send'])) {
 
     <link rel="stylesheet" href="../style.css">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- META TAGS -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- META TAGS -->
 <meta name="title" content="Raksha - Women Safety & Emergency Protection System">
 <meta name="description" content="Raksha is a smart women safety platform for SOS alerts, emergency support, live location sharing, and nearby police assistance. Stay safe, stay empowered.">
 
@@ -47,6 +47,7 @@ if (isset($_POST['send'])) {
 <meta property="og:description" content="Smart platform for women's safety with instant SOS alerts, live tracking, and police support.">
 
 <meta name="theme-color" content="#e91e63">
+
 <link rel="icon" href="../assets/favicon.jpg" type="image/x-icon" />
 
     <style>
@@ -77,7 +78,6 @@ if (isset($_POST['send'])) {
 <h2>🚨 Emergency SOS (Without Login)</h2>
 </div>
 </header>
-
 
 <div class="card">
 
@@ -138,7 +138,6 @@ function sendSOS() {
 }
 
 // Shake sos detection
-
 let lastX = 0, lastY = 0, lastZ = 0;
 let shakeThreshold = 15;   // Sensitivity
 let lastShake = 0;
