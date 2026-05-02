@@ -140,7 +140,6 @@ function sendSOS() {
 }
 
 // Shake sos detection
-
 let lastX = 0, lastY = 0, lastZ = 0;
 let shakeThreshold = 15;   // Sensitivity
 let lastShake = 0;
