@@ -45,17 +45,18 @@ while ($row = $res->fetch_assoc()) {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>SOS Map View - Raksha</title>
-
+    
+        <link rel="icon" href="../assets/favicon.jpg" type="image/x-icon" />
+    
+    <!-- META TAGS -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" href="../assets/favicon.jpg" type="image/x-icon" />
-
-    <!-- META TAGS -->
     <meta name="title" content="Raksha - Women Safety & Emergency Protection System">
     <meta name="description" content="Raksha is a smart women safety platform for SOS alerts, emergency support, live location sharing, and nearby police assistance. Stay safe, stay empowered.">
 
@@ -101,7 +102,6 @@ while ($row = $res->fetch_assoc()) {
     </a>
 
 </div>
-
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
