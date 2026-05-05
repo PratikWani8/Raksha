@@ -207,8 +207,6 @@ canvas {
 <input id="phone" placeholder="Phone Number" readonly>
 <input id="location" placeholder="Location" readonly>
 
-
-
 <div class="desc-box">
 <textarea id="description" placeholder="Describe incident or use voice..."></textarea>
 
@@ -273,7 +271,7 @@ IPC: <span id="ipc"></span>
 </p>
 </div>
 
-<!-- didital sign -->
+<!-- digital sign -->
 <div class="digital-sign-container">
 
 <p class="label">Digital Signature</p>
@@ -309,7 +307,7 @@ Clear Signature
 
 <script>
 
-// -------- FETCH USER DATA --------
+// FETCH USER DATA
 async function loadUser(){
     try{
         let res = await fetch("get_user.php");
@@ -329,7 +327,7 @@ async function loadUser(){
 }
 loadUser();
 
-// -------- VOICE INPUT --------
+// VOICE INPUT 
 let recognition;
 function startVoice(){
   if(!('webkitSpeechRecognition' in window)){
@@ -376,7 +374,7 @@ async function runOCRAndDetect(file){
     document.getElementById("crimeBox").style.display = "block";
 }
 
-// -------- FILE INPUT --------
+// FILE INPUT
 document.getElementById("fileInput").addEventListener("change", async function(e){
 
     const file = e.target.files[0];
@@ -395,13 +393,13 @@ document.getElementById("fileInput").addEventListener("change", async function(e
     }
 });
 
-// -------- TOGGLE --------
+// TOGGLE 
 document.getElementById("toggle").addEventListener("click", function(){
     ocrEnabled = !ocrEnabled;
     this.classList.toggle("active");
 });
 
-// -------- NLP MODEL --------
+// NLP MODEL 
 let model;
 
 // Vocabulary (expanded)
@@ -493,7 +491,7 @@ async function loadModel(){
 
 loadModel();
 
-// -------- PREDICTION --------
+// PREDICTION 
 function predictType(text){
 
     const input = tf.tensor2d([textToVector(text)]);
@@ -506,7 +504,7 @@ function predictType(text){
     return types[index];
 }
 
-// -------- IPC SECTION MAPPING --------
+// IPC SECTION MAPPING 
 function getIPCSections(type, text){
 
     text = text.toLowerCase();
@@ -1005,7 +1003,7 @@ ${description}
     document.getElementById("output").value = fir;
 }
 
-// -------- PDF --------
+// PDF
 const { jsPDF } = window.jspdf;
 
 const canvas = document.getElementById("signature-pad");
@@ -1077,7 +1075,7 @@ async function downloadPDF(){
     doc.save("FIR.pdf");
 }
 
-// -------- LOCATION --------
+// LOCATION 
 async function getAddress(lat, lon){
   try{
     let res = await fetch(`get_address.php?lat=${lat}&lon=${lon}`);
@@ -1104,7 +1102,6 @@ navigator.geolocation.getCurrentPosition(async pos=>{
 }, err=>{
   alert("Location access denied!");
 });
-
 
 </script>
 </body>
