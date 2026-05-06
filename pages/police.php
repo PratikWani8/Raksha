@@ -147,13 +147,22 @@ onkeypress="if(event.key==='Enter') sendMessage()">
 
 </div>
 
-<button class="chat-toggle-btn" onclick="toggleChat()">🤖</button>
+<button class="chat-toggle-btn" onclick="toggleChat()">
+    <div class="chat-btn-inner">
+        
+        <span class="ping"></span>
+
+        <img src="../assets/raksha_ai_pfp.jpg" alt="chatbot" class="bot-img">
+
+        <span class="status-dot"></span>
+
+    </div>
+</button>
 
  <!-- Footer -->
 <footer style="text-align:center; padding:15px; color:#666; background:white; margin-top:30px;">
   © <?php echo date("Y"); ?> Raksha - Women Safety System | Designed for Safety • Security • Empowerment for Women | All Rights Reserved.
 </footer>
-
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
@@ -182,7 +191,6 @@ const userIcon = L.icon({
 
 });
 
-
 const policeIcon = L.icon({
 
   iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
@@ -196,9 +204,7 @@ const policeIcon = L.icon({
 
 });
 
-
 // GET LOCATION
-
 function getLocation() {
 
   if (navigator.geolocation) {
@@ -215,9 +221,7 @@ function getLocation() {
   }
 }
 
-
 // SHOW MAP
-
 function showMap(position) {
 
   userLat = position.coords.latitude;
@@ -227,9 +231,7 @@ function showMap(position) {
     map.remove();
   }
 
-
   map = L.map("map").setView([userLat, userLng], 14);
-
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
@@ -237,7 +239,6 @@ function showMap(position) {
       '&copy; OpenStreetMap contributors',
 
   }).addTo(map);
-
 
   // User Marker (GREEN)
   L.marker(
@@ -248,14 +249,11 @@ function showMap(position) {
   .bindPopup("You are here")
   .openPopup();
 
-
   getPoliceStations(userLat, userLng);
 
 }
 
-
 // DISTANCE FUNCTION
-
 function getDistance(lat1, lon1, lat2, lon2) {
 
   const R = 6371;
@@ -276,13 +274,10 @@ function getDistance(lat1, lon1, lat2, lon2) {
 
 }
 
-
 // LOAD POLICE STATIONS
-
 function getPoliceStations(lat, lng) {
 
   const radius = 10000; // 10 km
-
 
   const query = `
     [out:json];
@@ -292,11 +287,9 @@ function getPoliceStations(lat, lng) {
     out;
   `;
 
-
   const url =
     "https://overpass-api.de/api/interpreter?data=" +
     encodeURIComponent(query);
-
 
   fetch(url)
 
@@ -311,7 +304,6 @@ function getPoliceStations(lat, lng) {
 
       }
 
-
       let minDistance = Infinity;
       nearestStation = null;
 
@@ -323,12 +315,10 @@ function getPoliceStations(lat, lng) {
         const name =
           place.tags.name || "Police Station";
 
-
         const distance = getDistance(
           userLat, userLng,
           policeLat, policeLng
         );
-
 
         // Find nearest
         if (distance < minDistance) {
@@ -342,7 +332,6 @@ function getPoliceStations(lat, lng) {
           };
 
         }
-
 
         // Police Marker (RED)
         L.marker(
@@ -390,7 +379,6 @@ function getPoliceStations(lat, lng) {
           
       });
 
-
       // Auto Route to Nearest
       if (nearestStation) {
 
@@ -399,7 +387,6 @@ function getPoliceStations(lat, lng) {
           nearestStation.name +
           " (" + minDistance.toFixed(2) + " km)"
         );
-
 
         showRoute(
           nearestStation.lat,
@@ -419,9 +406,7 @@ function getPoliceStations(lat, lng) {
 
 }
 
-
 // SHOW ROUTE
-
 function showRoute(destLat, destLng) {
 
   if (routeControl) {
@@ -443,7 +428,6 @@ function showRoute(destLat, destLng) {
     show: true
 
   }).addTo(map);
-
 
   // Voice Navigation
   routeControl.on('routesfound', function(e) {
@@ -468,9 +452,7 @@ function showRoute(destLat, destLng) {
 
 }
 
-
 // ERROR HANDLING
-
 function showError(error) {
 
   switch(error.code) {
