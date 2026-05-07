@@ -77,7 +77,6 @@
       and stay confident in every situation.
     </p>
 
-    
       <button class="primary-btn" onclick="document.getElementById('tips').scrollIntoView({ behavior: 'smooth' });">Get Started ➞</button>
       
     <a href="police.php">
@@ -91,7 +90,6 @@
     </div>
 
   </section>
-
 
   <!-- Tips Cards -->
   <section class="tips-container" id="tips">
@@ -181,7 +179,17 @@ onkeypress="if(event.key==='Enter') sendMessage()">
 
 </div>
 
-<button class="chat-toggle-btn" onclick="toggleChat()">🤖</button>
+<button class="chat-toggle-btn" onclick="toggleChat()">
+    <div class="chat-btn-inner">
+        
+        <span class="ping"></span>
+
+        <img src="../assets/raksha_ai_pfp.jpg" alt="chatbot" class="bot-img">
+
+        <span class="status-dot"></span>
+
+    </div>
+</button>
 
   <!-- Footer -->
    <footer style="text-align:center; padding:15px; color:#666; background:white; margin-top:30px;">
