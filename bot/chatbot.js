@@ -116,7 +116,6 @@ try {
 }
 }
 
-
 async function sendMessage() {
 try {
 
@@ -175,7 +174,6 @@ try {
 
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    
     setTimeout(() => {
         speak(reply, lang);
     }, reply.length * 20);
@@ -195,7 +193,6 @@ try {
 
 }
 }
-
 
 function typeWriter(element, text, speed) {
 try {
