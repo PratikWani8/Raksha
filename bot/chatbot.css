@@ -1,5 +1,4 @@
-/* ================= CHATBOT BUTTON ================= */
-
+/* CHATBOT BUTTON */
 .chat-toggle-btn{
 position:fixed;
 bottom:20px;
@@ -77,8 +76,7 @@ z-index:20;
 
 .chat-toggle-btn:hover { transform: scale(1.1); }
 
-/* ================= CHATBOT BOX ================= */
-
+/* CHATBOT BOX */
 .chatbot-wrapper{
 display:none;
 flex-direction:column;
@@ -96,7 +94,6 @@ animation: slideUp 0.3s ease-out;
 }
 
 /* HEADER */
-
 .chat-header{
 background:#e91e63;
 color:white;
@@ -105,7 +102,6 @@ font-weight:600;
 }
 
 /* CHAT AREA */
-
 .chat-content{
 flex:1;
 overflow-y:auto;
@@ -114,7 +110,6 @@ background:#fff5f8;
 }
 
 /* MESSAGE */
-
 .msg{
 padding:8px 12px;
 margin-bottom:8px;
@@ -135,7 +130,6 @@ margin-left:auto;
 }
 
 /* INPUT */
-
 .chat-input-area{
 display:flex;
 gap:5px;
@@ -227,8 +221,7 @@ animation:dots 1s infinite;
 66%{content:"...";}
 100%{content:".";}
 }
-/* ================= MOBILE ================= */
-
+/* MOBILE */
 @media (max-width:600px){
 
 .chatbot-wrapper{
@@ -243,5 +236,4 @@ width:60px;
 height:60px;
 font-size:24px;
 }
-
 }
